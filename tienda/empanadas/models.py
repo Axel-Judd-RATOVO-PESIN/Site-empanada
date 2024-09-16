@@ -13,7 +13,7 @@ class Ingredient(models.Model) :
 
 
 
-class Empanda(models.Model) :
+class Empanada(models.Model) :
     #cle primaire, avec auto-increment
     idEmpanada    = models.AutoField(    primary_key    = True )
     #chaine de caractere de taille bornee
@@ -23,4 +23,15 @@ class Empanda(models.Model) :
     #version pytho, du toString(), utilise par django dans ses interfaces 
     def __str__(self) :
         return 'empanda'+self.nomEmpanada+' (prix:'+str(self.prix)+'€)'
+
+class Composition(models.Model):
+    class Meta:
+        unique_together = ('ingredient','empanada')
+    idComposition = models.AutoField( primary_key = True )
+    ingredient = models.ForeignKey( Ingredient, on_delete = models.CASCADE )
+    empanada = models.ForeignKey( Empanada, on_delete = models.CASCADE )
+    quantite = models.CharField( max_length = 100 )
+def __str__(self):
+    res = self.ingredient.nomIngredient+'fait partie de la empanada'+' "'+self.empanada.nomEmpanada+'"'+' (quantité: '+self.quantite+')'
+    return res
 
