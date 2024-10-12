@@ -1,0 +1,20 @@
+/* Pour que le body occupe toute la hauteur de la fenêtre */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* La section main doit s'étendre pour occuper tout l'espace disponible */
+main {
+  flex: 1;
+}
+
+/* Style pour le footer afin qu'il reste collé en bas */
+footer {
+  background-color: #f1f1f1; /* Couleur de fond pour différencier le footer */
+  text-align: center;
+  padding: 10px;
+}
