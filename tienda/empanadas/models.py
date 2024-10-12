@@ -31,7 +31,5 @@ class Composition(models.Model):
     ingredient = models.ForeignKey( Ingredient, on_delete = models.CASCADE )
     empanada = models.ForeignKey( Empanada, on_delete = models.CASCADE )
     quantite = models.CharField( max_length = 100 )
-def __str__(self):
-    res = self.ingredient.nomIngredient+'fait partie de la empanada'+' "'+self.empanada.nomEmpanada+'"'+' (quantité: '+self.quantite+')'
-    return res
-
+    def __str__(self):
+    	return f"Composition: {self.quantite}, Empanada ID: {self.empanada_id.id}, Ingredient ID: {self.ingredient_id.id}"
