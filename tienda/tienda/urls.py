@@ -19,8 +19,10 @@ from django.urls import path
 from empanadas import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('empanadas/', views.empanadas),
-    path('ingredients/', views.ingredients),
-    path('empanada/<int:empanada_id>', views.empanada),
+    path('admin/', 			admin.site.urls),
+    path('empanadas/', 			views.empanadas),
+    path('ingredients/', 		views.ingredients),
+    path('empanada/<int:empanada_id>',  views.empanada),
+    path('ingredients/add', 		views.formulaireCreationIngredient),
+    path('ingredients/create',		views.creerIngredient, name='creerIngredient'),
 ]

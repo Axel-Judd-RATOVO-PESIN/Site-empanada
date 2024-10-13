@@ -1,0 +1,17 @@
+{% extends 'empanadas/base.html' %}
+
+{% block title %} création d'un ingrédient {% endblock %}
+
+{% block main %}
+<h2> Création d'un ingrédient </h2>
+<form action="{% url 'creerIngredient' %}" method="POST">
+	{% csrf_token %}
+	<div class="m-3">
+		<label for="id_nomIngredient" class="form-label"> Le nom de l'ingrédient </label>
+		<input id="id_nomIngredient" name="nomIngredient" type="text" maxlength="50" required class="form-control"/>
+	</div>
+	<button type="submit" class="btn btn-primary"> Envoyer </button>
+</form>
+{% endblock %}
+
+

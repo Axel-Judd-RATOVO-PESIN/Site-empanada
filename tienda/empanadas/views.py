@@ -3,6 +3,7 @@ from django.shortcuts import render
 from empanadas.models import Empanada
 from empanadas.models import Ingredient
 from empanadas.models import Composition
+from empanadas.forms  import IngredientForm
 
 def empanadas(request):
     lesEmpanadas = Empanada.objects.all()
@@ -20,7 +21,7 @@ def empanada(request, empanada_id) :
 	for compo in compositions:
 		ingredients_list.append({
 			'Ingredient' : compo.ingredient.nomIngredient,
-			'Quantité' : compo.quantite
+			'Quantite' : compo.quantite
 		})
 	
 	context = {
@@ -29,3 +30,18 @@ def empanada(request, empanada_id) :
 	}	
 
 	return render( request, 'empanadas/empanada.html', context )
+
+
+def formulaireCreationIngredient(request):
+	return render( request, 'empanadas/formulaireCreationIngredient.html' )
+
+def creerIngredient(request):
+	form = IngredientForm(request.POST)
+	if form.is_valid():
+		nomIngr 		= form.cleaned_data['nomIngredient']
+		ingr 			= Ingredient()
+		ingr.nomIngredient 	= nomIngr
+		ingr.save()
+		return render(request, 'empanadas/traitementFormulaireCreationIngredient.html', {'nom' : nomIngr}, )
+	else:
+		return render(request, 'empanadas/formulaireNonValide.html', {'erreurs' : form.errors}, )
