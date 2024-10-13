@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('empanadas/', views.empanadas),
     path('ingredients/', views.ingredients),
+    path('empanada/<int:empanada_id>', views.empanada),
 ]
