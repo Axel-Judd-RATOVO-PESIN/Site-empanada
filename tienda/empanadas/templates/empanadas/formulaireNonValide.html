@@ -1,8 +1,29 @@
 {% extends 'empanadas/base.html' %}
 
-{% block title %} Erreur de création {% endblock %}
+{% block title %}Erreur de création{% endblock %}
 
 {% block main %}
-<h2> Erreur de création </h2>
-<p>Erreur : {{erreurs}}</p>
+    <div class="alert alert-danger mt-4">
+        <h2 class="text-center">Erreur de création</h2>
+        <p class="text-center">Il y a eu un problème lors de la soumission du formulaire. Veuillez vérifier les détails ci-dessous :</p>
+    </div>
+
+    <div class="m-4">
+        <ul class="list-group">
+            {% for field, error_list in erreurs.items %}
+                <li class="list-group-item list-group-item-warning">
+                    <strong>{{ field }} :</strong>
+                    <ul>
+                        {% for error in error_list %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="javascript:history.back()" class="btn btn-secondary">Retour au formulaire</a>
+    </div>
 {% endblock %}
