@@ -11,10 +11,6 @@ class EmpanadaForm(ModelForm):
 	class Meta:
 		model = Empanada
 		fields = ['nomEmpanada', 'prix']
-		labels = {
-			'nomEmpanada' : 'Nom de l\'Empanada',
-			'prix' : 'prix de l\'Empanada',
-		}
 		
 
 #-------- VERSION NON-AUTOMATIQUE --------#

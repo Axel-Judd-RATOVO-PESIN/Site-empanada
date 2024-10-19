@@ -4,6 +4,7 @@ from empanadas.models import Empanada
 from empanadas.models import Ingredient
 from empanadas.models import Composition
 from empanadas.forms  import IngredientForm
+from empanadas.forms  import EmpanadaForm
 
 def empanadas(request):
     lesEmpanadas = Empanada.objects.all()
@@ -50,16 +51,16 @@ def formulaireCreationEmpanada(request):
 	return render( request, 'empanadas/formulaireCreationEmpanada.html')
 
 def creerEmpanada(request):
-	form = EmpanadaForm(request.POST)
+	form =  EmpanadaForm(request.POST)
 	if form.is_valid():
 		nomEmp = form.cleaned_data['nomEmpanada']
-		prixEmp = form.cleand_data['prix']
+		prixEmp = form.cleaned_data['prix']
 		emp = Empanada()
 		emp.nomEmpanada = nomEmp
 		emp.prix = prixEmp
 		emp.save()
-		return render(request, 'empanadas/traitementFormulaireCreationEmpanada.html', {'nomEmp' : nomEmp ,'prixEmp' : prixEmp}, )
+		return render(request, 'empanadas/traitementFormulaireCreationEmpanada.html', {'nomEmp' : nomEmp ,'prixEmp' : prixEmp}, )	
 	else:
-		return render(request, 'empanadas/formulaireNonValide.html', {'erreurs' : form.errors}, )
+		return render(request, 'empanadas/formulaireCreationEmpanada.html', {'erreurs' : form.errors}, )
 
 
