@@ -7,7 +7,10 @@
 <ul>
 	{% for emp in empanadas %}
 	<li>
-		{{emp}} | <a href="/empanada/{{emp.idEmpanada}}"> détails</a> 
+		{{emp}} 
+		| <a href="/empanada/{{emp.idEmpanada}}"> détails</a>
+		| <a href="/empanada/{{emp.idEmpanada}}/update">modifier</a>
+		| <a href="/empanada/{{emp.idEmpanada}}/delete">supprimer</a> 
 	</li>
 	{% endfor %}
 </ul>

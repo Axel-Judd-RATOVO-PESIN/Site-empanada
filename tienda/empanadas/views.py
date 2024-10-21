@@ -7,6 +7,9 @@ from empanadas.models import Composition
 from empanadas.forms  import IngredientForm
 from empanadas.forms  import EmpanadaForm
 from empanadas.forms  import CompositionForm
+from django.http import HttpResponse #--- Importation de la librairie http pour afficher des messages
+from django.contrib import messages #--- Optionnel, mais me permet d'afficher un message suite à une action
+
 
 def empanadas(request):
     lesEmpanadas = Empanada.objects.all()
@@ -93,7 +96,22 @@ def ajouterIngredientDsEmpanada(request, empanada_id):
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
 
 
+def supprimerEmpanada(request, empanada_id):
+	emp = Empanada.objects.get( idEmpanada= empanada_id) #--- On recup la empanada à supprimer
+	emp.delete()
+	return redirect('liste_empanadas') #-- 'liste_empanadas' est le nom donné à l'url 'empanadas/'
 
 
+def afficherFormulaireModificationEmpanada(request, empanada_id):
+	emp = Empanada.objects.get( idEmpanada= empanada_id)
+	return render( request, 'empanadas/formulaireModificationEmpanada.html', {'empanada': emp} )
 
 
+def modifierEmpanada(request, empanada_id):
+	empToEdit = Empanada.objects.get( idEmpanada= empanada_id)
+	form = EmpanadaForm(request.POST, instance=empToEdit) #-- Recup formulaire posté avec pour instance la empanada récupérée
+	if form.is_valid():
+		form.save()
+		return redirect('liste_empanadas')
+	else:
+		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
