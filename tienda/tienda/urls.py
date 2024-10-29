@@ -21,7 +21,7 @@ from empanadas import views
 urlpatterns = [
     path('admin/', 					admin.site.urls),
     path('empanadas/', 					views.empanadas, name='liste_empanadas'),
-    path('ingredients/', 				views.ingredients),
+    path('ingredients/', 				views.ingredients, name='liste_ingredients'),
     path('empanada/<int:empanada_id>',  		views.empanada),
     path('ingredients/add', 				views.formulaireCreationIngredient),
     path('ingredients/create',				views.creerIngredient, name='creerIngredient'),
@@ -31,4 +31,7 @@ urlpatterns = [
     path('empanada/<int:empanada_id>/delete/',		views.supprimerEmpanada),
     path('empanada/<int:empanada_id>/update/',		views.afficherFormulaireModificationEmpanada),
     path('empanada/<int:empanada_id>/updated',		views.modifierEmpanada, name='editEmpanada'),
+    path('ingredient/<int:ingredient_id>/delete/',	views.supprimerIngredient, name='supprimerIngredient'),
+    path('ingredient/<int:ingredient_id>/update/',	views.afficherFromulaireModificationIngredient, name='afficherFormIngredient'),
+    path('ingredient/<int:ingredient_id>/updated',      views.modifierIngredient, name='editIngredient'),
 ]

@@ -4,7 +4,7 @@
 
 {% block main %}
 <h2> Modification d'une Empanada </h2>
-<form action="{% url 'editEmpanada' %}" method="POST">
+<form action="{% url 'editEmpanada' empanada.idEmpanada %}" method="POST">
         {% csrf_token %}
         <div class="m-3">
                 <label for="id_nomEmpanada" class="form-label"> Le nom de l'empanada </label>

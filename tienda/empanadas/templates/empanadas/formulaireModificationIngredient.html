@@ -1,0 +1,16 @@
+{% extends 'empanadas/base.html' %}
+
+{% block title %} modification d'un Ingrédient {% endblock %}
+
+{% block main %}
+<h2> Modification d'un Ingrédient </h2>
+<form action="{% url 'editIngredient' ingredient.idIngredient %}" method="POST">
+        {% csrf_token %}
+        <div class="m-3">
+                <label for="id_nomIngredient" class="form-label"> Le nom de l'ingrédient </label>
+                <input id="id_nomIngredient" name="nomIngredient" type="text" value="{{ingredient.nomIngredient}}" maxlength="50" required class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary"> Envoyer </button>
+</form>
+{% endblock %}

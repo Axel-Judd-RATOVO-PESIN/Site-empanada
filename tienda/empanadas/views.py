@@ -41,6 +41,11 @@ def empanada(request, empanada_id) :
 	return render( request, 'empanadas/empanada.html', context )
 
 
+
+
+#-------------------------------------- PARTIE : CREATION D'UN INGREDIENT ----------------------------------------------------------
+
+
 def formulaireCreationIngredient(request):
 	return render( request, 'empanadas/formulaireCreationIngredient.html' )
 
@@ -54,6 +59,12 @@ def creerIngredient(request):
 		return render(request, 'empanadas/traitementFormulaireCreationIngredient.html', {'nom' : nomIngr}, )
 	else:
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreurs' : form.errors}, )
+
+
+
+
+
+#--------------------------------------- PARTIE : CREATION D'UNE EMPANADA ------------------------------------------------------
 
 def formulaireCreationEmpanada(request):
 	return render( request, 'empanadas/formulaireCreationEmpanada.html')
@@ -71,6 +82,10 @@ def creerEmpanada(request):
 	else:
 		return render(request, 'empanadas/formulaireCreationEmpanada.html', {'erreurs' : form.errors}, )
 
+
+
+
+#------------------------------------------------ PARTIE : AJOUT D'UN INGREDIENT POUR UN EMPANADA ----------------------------------
 
 def ajouterIngredientDsEmpanada(request, empanada_id):
 	form = CompositionForm(request.POST)
@@ -96,6 +111,10 @@ def ajouterIngredientDsEmpanada(request, empanada_id):
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
 
 
+
+
+#-------------------------------------------- PARTIE : TRAITEMENT D'UNE EMPANADA ---------------------------------------------------
+
 def supprimerEmpanada(request, empanada_id):
 	emp = Empanada.objects.get( idEmpanada= empanada_id) #--- On recup la empanada à supprimer
 	emp.delete()
@@ -113,5 +132,30 @@ def modifierEmpanada(request, empanada_id):
 	if form.is_valid():
 		form.save()
 		return redirect('liste_empanadas')
+	else:
+		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
+
+
+
+
+
+#----------------------------------------------- PARTIE : TRAITEMENT D'UN INGREDIENT --------------------------------------------------
+
+def supprimerIngredient(request, ingredient_id):
+	ing = Ingredient.objects.get( idIngredient= ingredient_id)
+	ing.delete()
+	return redirect('liste_ingredients')
+
+
+def afficherFromulaireModificationIngredient(request, ingredient_id):
+	ingr = Ingredient.objects.get( idIngredient= ingredient_id)
+	return render( request, 'empanadas/formulaireModificationIngredient.html', {'ingredient' : ingr} )
+
+def modifierIngredient(request, ingredient_id):
+	ingrToEdit = Ingredient.objects.get( idIngredient= ingredient_id)
+	form = IngredientForm(request.POST, instance=ingrToEdit)
+	if form.is_valid():
+		form.save()
+		return redirect('liste_ingredients')
 	else:
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})

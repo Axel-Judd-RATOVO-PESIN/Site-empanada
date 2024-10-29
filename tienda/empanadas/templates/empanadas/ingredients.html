@@ -6,7 +6,10 @@
 <h2>Voici nos {{ingredients|length}} ingédients</h2>
 <ul>
         {% for ing in ingredients %}
-        <li>{{ing}}</li>
+        <li>{{ing}}                
+		| <a href="{% url 'afficherFormIngredient' ing.idIngredient %}">modifier</a>
+                | <a href="{% url 'supprimerIngredient' ing.idIngredient %}">supprimer</a>
+	</li>
         {% endfor %}
 </ul>
 {% endblock %}
