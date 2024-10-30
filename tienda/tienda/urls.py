@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', 					admin.site.urls),
     path('empanadas/', 					views.empanadas, name='liste_empanadas'),
     path('ingredients/', 				views.ingredients, name='liste_ingredients'),
-    path('empanada/<int:empanada_id>',  		views.empanada),
+    path('empanada/<int:empanada_id>',  		views.empanada, name='detailsEmpanada'),
     path('ingredients/add', 				views.formulaireCreationIngredient),
     path('ingredients/create',				views.creerIngredient, name='creerIngredient'),
     path('empanadas/add',               		views.formulaireCreationEmpanada),
@@ -34,4 +34,5 @@ urlpatterns = [
     path('ingredient/<int:ingredient_id>/delete/',	views.supprimerIngredient, name='supprimerIngredient'),
     path('ingredient/<int:ingredient_id>/update/',	views.afficherFromulaireModificationIngredient, name='afficherFormIngredient'),
     path('ingredient/<int:ingredient_id>/updated',      views.modifierIngredient, name='editIngredient'),
+    path('empanadas/<int:empanada_id>/deleteIngredient/<int:ligne_id>/',  views.supprimerIngredientDansEmpanada),
 ]

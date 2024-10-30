@@ -1,51 +1,76 @@
-{% extends 'empanadas/base.html' %}
+{% extends 'empanadas/base.html' %} 
 
-{% block title %} Détail d'une empanada {% endblock %}
+{% block title %} Détail d'une empanada {%endblock %} 
 
 {% block main %}
 <h2>{{ empanada }}</h2>
+<!-- Affichage des messages -->
+{% if messages %} {% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %} {% endif %}
+
 <div class="table-container">
-    {% if ingredients_list %}
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Ingrédient</th>
-                    <th scope="col">Quantité</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ing in ingredients_list %}
-                <tr>
-                    <td>{{ ing.Ingredient }}</td>
-                    <td>{{ ing.Quantite }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-            Aucun ingrédient n'a encore été ajouté pour cette empanada.
-        </div>
-    {% endif %}
+  {% if ingredients_list %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Ingrédient</th>
+        <th scope="col">Quantité</th>
+        <th scope="col">Suppression</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ing in ingredients_list %}
+      <tr>
+        <td>{{ ing.Ingredient }}</td>
+        <td>{{ ing.Quantite }}</td>
+        <td>
+          <a
+            href="/empanadas/{{empanada.idEmpanada}}/deleteIngredient/{{ing.idComposition}}"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Supprimer cet ingrédient"
+          >
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    Aucun ingrédient n'a encore été ajouté pour cette empanada.
+  </div>
+  {% endif %}
 </div>
-<h2> Ajouter un ingrédient à la recette</h2>
+<h2>Ajouter un ingrédient à la recette</h2>
 <form action="/empanada/{{empanada.idEmpanada}}/addIngredient" method="POST">
-	{% csrf_token %}
-	<div class="m-3">
-		<label for="id_ingredient" class="form-label"></label>
-		<select id="id_ingredient" name="ingredient" class="form-select" required>
-			<option selected disabled>Choisissez</option>
-			{% for ingr in allIngredients %}
-			<option value="{{ingr.idIngredient}}">{{ingr.nomIngredient}}</option>
-			{% endfor %}
-		</select>
-	</div>
-	<div class="m-3">
-		<label for="id_quantite" class="form-label"> Quantié </label>
-		<input id="id_quantite" name="quantite" type="text" maxlength="100" required class="form-control"/>
-	</div>
-	<button type="submit" class="btn btn-primary">Envoyer</button>
+  {% csrf_token %}
+  <div class="m-3">
+    <label for="id_ingredient" class="form-label"></label>
 
-{% endblock %}
+    <select id="id_ingredient" name="ingredient" class="form-select" required>
+      <option selected disabled>Choisissez</option>
 
+      {% for ingr in allIngredients %}
+      <option value="{{ingr.idIngredient}}">{{ingr.nomIngredient}}</option>
+      {% endfor %}
+    </select>
 
+  </div>
+  <div class="m-3">
+    <label for="id_quantite" class="form-label"> Quantié </label>
+    <input
+      id="id_quantite"
+      name="quantite"
+      type="text"
+      maxlength="100"
+      required
+      class="form-control"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Envoyer</button>
+
+  {% endblock %}
+</form>

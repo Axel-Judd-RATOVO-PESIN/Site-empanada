@@ -29,7 +29,8 @@ def empanada(request, empanada_id) :
 		ingredients_list.append({
 			'idIngredient' : compo.ingredient.idIngredient,
 			'Ingredient' : compo.ingredient.nomIngredient,
-			'Quantite' : compo.quantite
+			'Quantite' : compo.quantite,
+			'idComposition' : compo.idComposition #-- Util pour la fonction supprimerIngredientDansEmpanada
 		})
 	
 	context = {
@@ -93,8 +94,8 @@ def ajouterIngredientDsEmpanada(request, empanada_id):
 		ingr = form.cleaned_data['ingredient']
 		qt = form.cleaned_data['quantite']
 
-		if not qt.endswith('g'): #-- Nous permet d'ajouter l'unité de mesure pour la quantite
-			qt += 'g'
+		#if not qt.endswith('g'): #-- Nous permet d'ajouter l'unité de mesure pour la quantite
+		#	qt += 'g'
 
 		emp = Empanada.objects.get(idEmpanada=empanada_id)
 		recherche = Composition.objects.filter(empanada=empanada_id, ingredient=ingr.idIngredient)
@@ -106,7 +107,7 @@ def ajouterIngredientDsEmpanada(request, empanada_id):
 			ligne.empanada = emp
 		ligne.quantite = qt
 		ligne.save()
-		return redirect('/empanada/%d'% empanada_id)
+		return redirect('detailsEmpanada', empanada_id)
 	else:
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
 
@@ -159,3 +160,19 @@ def modifierIngredient(request, ingredient_id):
 		return redirect('liste_ingredients')
 	else:
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
+
+
+
+
+#------------------------------------------ PARTIE : SUPPRESSION D'UN INGREDIENT DANS UNE COMPOSITION D'UNE EMPANADA -------------------------------
+
+
+def supprimerIngredientDansEmpanada(request, empanada_id, ligne_id):
+    try:
+        getComposition = Composition.objects.get(empanada=empanada_id, idComposition=ligne_id)
+        getComposition.delete()
+        messages.success(request, "L'ingrédient a bien été supprimé.")
+    except Composition.DoesNotExist:
+        messages.error(request, "Erreur : l'ingrédient à supprimer n'existe pas.")
+
+    return redirect('detailsEmpanada', empanada_id=empanada_id)  # Redirection vers la page détails d'une empanada
