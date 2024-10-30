@@ -1,17 +1,32 @@
 {% extends 'empanadas/base.html' %}
 
-{% block title %} les empanadas {% endblock %}
+{% load static %}
+
+{% block title %} Les empanadas {% endblock %}
 
 {% block main %}
-<h2>Voici nos {{empanadas|length}} empanadas</h2>
-<ul>
-	{% for emp in empanadas %}
-	<li>
-		{{emp}} 
-		| <a href="/empanada/{{emp.idEmpanada}}"> détails</a>
-		| <a href="/empanada/{{emp.idEmpanada}}/update">modifier</a>
-		| <a href="/empanada/{{emp.idEmpanada}}/delete">supprimer</a> 
-	</li>
-	{% endfor %}
-</ul>
+<h2 class="titreep">Voici nos {{ empanadas|length }} empanadas</h2>
+<div class="row">
+    {% for emp in empanadas %}
+    <div class="col-md-4 mb-4"> <!-- Utilisation d'une colonne Bootstrap -->
+        <div class="card"> <!-- Début de la carte -->
+            <img src="{{ MEDIA_URL }}{{ emp.image }}" class="card-img-top" alt="{{emp}}">
+            <div class="card-body">
+                <h6 class="card-title">{{ emp }}</h6>
+                <div class="d-flex justify-content-between">
+                    <a href="/empanada/{{ emp.idEmpanada }}" class="btn btn-primary">
+                        <i class="bi bi-eye"></i> 
+                    </a>
+                    <a href="/empanada/{{ emp.idEmpanada }}/update" class="btn btn-warning">
+                        <i class="bi bi-pencil-square"></i> 
+                    </a>
+                    <a href="/empanada/{{ emp.idEmpanada }}/delete" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> 
+                    </a>
+                </div>
+            </div>
+        </div> <!-- Fin de la carte -->
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

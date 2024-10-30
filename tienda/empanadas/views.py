@@ -78,6 +78,7 @@ def creerEmpanada(request):
 		emp = Empanada()
 		emp.nomEmpanada = nomEmp
 		emp.prix = prixEmp
+		emp.image = request.FILES['image']
 		emp.save()
 		return render(request, 'empanadas/traitementFormulaireCreationEmpanada.html', {'nomEmp' : nomEmp ,'prixEmp' : prixEmp}, )	
 	else:
@@ -129,10 +130,12 @@ def afficherFormulaireModificationEmpanada(request, empanada_id):
 
 def modifierEmpanada(request, empanada_id):
 	empToEdit = Empanada.objects.get( idEmpanada= empanada_id)
-	form = EmpanadaForm(request.POST, instance=empToEdit) #-- Recup formulaire posté avec pour instance la empanada récupérée
+	form = EmpanadaForm(request.POST, request.FILES, instance=empToEdit) #-- Recup formulaire posté avec pour instance la empanada récupérée
 	if form.is_valid():
-		form.save()
-		return redirect('liste_empanadas')
+		if 'image' in request.FILES:
+			empToEdit.image = request.FILES['image']
+		empToEdit.save()
+		return redirect('detailsEmpanada', empanada_id)
 	else:
 		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
 

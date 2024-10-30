@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from empanadas import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', 					admin.site.urls),
@@ -36,3 +39,5 @@ urlpatterns = [
     path('ingredient/<int:ingredient_id>/updated',      views.modifierIngredient, name='editIngredient'),
     path('empanadas/<int:empanada_id>/deleteIngredient/<int:ligne_id>/',  views.supprimerIngredientDansEmpanada),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #-- AFIN DE NOUS PERMETTRE D'AFFICHER LES IMAGES DES EMPANADAS

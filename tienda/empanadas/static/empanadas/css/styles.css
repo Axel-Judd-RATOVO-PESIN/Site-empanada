@@ -22,3 +22,65 @@ footer {
 /***************/
 
 
+/************ STYLE CSS POUR LA PAGE QUI LISTES TOUTES LES EMPANADAS ************/ 
+
+/* styles.css */
+
+.card {
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.card-title {
+    font-size: 1em;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+
+/************ STYLE POUR LE FICHIER QUI AFFICHE LES DETAILS D'UNE EMPANADA ***************/
+
+/* Styles pour le titre de l'empanada */
+.empanada-title {
+    font-size: 2rem; /* Ajustez la taille selon vos préférences */
+    margin-bottom: 20px; /* Espace sous le titre */
+}
+
+/* Styles pour l'image de l'empanada */
+.empanada-image {
+    max-width: 300px; /* Largeur maximale de l'image */
+    height: auto; /* Hauteur automatique pour maintenir le ratio */
+    border-radius: 8px; /* Coins arrondis */
+}
+
+/* Styles pour le tableau des ingrédients */
+.empanada-table {
+    margin: 0 auto; /* Centre le tableau */
+    width: 80%; /* Largeur du tableau, ajustez si nécessaire */
+}
+
+/* Styles pour le select de l'ingrédient */
+.empanada-select {
+    width: 300px; /* Largeur du select */
+}
+
+/* Styles pour les inputs du formulaire */
+.empanada-input {
+    width: 300px; /* Largeur de l'input */
+}
+
+
+

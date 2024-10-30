@@ -4,7 +4,7 @@
 
 {% block main %}
 <h2> Modification d'une Empanada </h2>
-<form action="{% url 'editEmpanada' empanada.idEmpanada %}" method="POST">
+<form action="{% url 'editEmpanada' empanada.idEmpanada %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="m-3">
                 <label for="id_nomEmpanada" class="form-label"> Le nom de l'empanada </label>
@@ -18,6 +18,15 @@
                 {{ form.prix.errors }}
                 {{ form.prix }}
         </div>
+	<div class="m-3">
+		<figure class="w-25 text-center m-auto">
+			<img src="{{ MEDIA_URL }}{{ empanada.image }}" class="img-fluid"/>
+			<figcaption>image actuelle : {{ empanada.image}} </figcaption>
+		</figure>
+		<label for="id_image" class="form-label">Nouvelle image</label>
+		<input id="id_image" name="image" type="file" accept="image/*" class="form-control">
+	</div>
+
 
         <button type="submit" class="btn btn-primary"> Envoyer </button>
 </form>
