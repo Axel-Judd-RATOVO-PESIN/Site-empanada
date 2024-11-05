@@ -7,8 +7,12 @@
 <ul>
         {% for ing in ingredients %}
         <li>{{ing}}                
-		| <a href="{% url 'afficherFormIngredient' ing.idIngredient %}">modifier</a>
-                | <a href="{% url 'supprimerIngredient' ing.idIngredient %}">supprimer</a>
+		| <a href="{% url 'afficherFormIngredient' ing.idIngredient %}">
+			<i class="bi bi-pencil-square"></i>
+		  </a>
+                | <a href="{% url 'supprimerIngredient' ing.idIngredient %}">
+			<i class="bi bi-trash"></i>
+		  </a>
 	</li>
         {% endfor %}
 </ul>

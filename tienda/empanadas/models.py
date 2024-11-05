@@ -35,4 +35,4 @@ class Composition(models.Model):
     empanada = models.ForeignKey( Empanada, on_delete = models.CASCADE )
     quantite = models.CharField( max_length = 100 )
     def __str__(self):
-    	return f"Composition: {self.quantite}, Empanada ID: {self.empanada_id.id}, Ingredient ID: {self.ingredient_id.id}"
+    	return f"Composition: {self.quantite}, Empanada ID: {self.empanada.idEmpanada}, Ingredient ID: {self.ingredient.idIngredient}"
