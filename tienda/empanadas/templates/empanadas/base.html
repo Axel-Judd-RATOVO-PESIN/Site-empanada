@@ -11,7 +11,13 @@
 </head>
 <body>
     <header>
-        {% include 'empanadas/menu.html' %}
+        {% if user.is_staff %}
+		{% include 'comptes/menuStaff.html' %}
+		{% elif user.is_authenticated %}
+		{% include 'comptes/menuClient.html' %}
+		{% else %}
+		{% include 'comptes/menuNonConnecte.html' %}
+		{% endif %}
     </header>
 
     <main>
