@@ -82,5 +82,57 @@ footer {
     width: 300px; /* Largeur de l'input */
 }
 
+/********************** FORMULAIRE LOGIN (comptes/Login.html) **********************/
+/* Centrer le conteneur du formulaire */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Occuper toute la hauteur de la fenêtre */
+    background-color: #f8f9fa; /* Couleur de fond légèrement grise */
+}
+
+/* Style de la carte qui contient le formulaire */
+.form-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre centré */
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Bouton de soumission */
+button[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Liens */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 
 
