@@ -21,118 +21,119 @@ footer {
 
 /***************/
 
-
-/************ STYLE CSS POUR LA PAGE QUI LISTES TOUTES LES EMPANADAS ************/ 
+/************ STYLE CSS POUR LA PAGE QUI LISTES TOUTES LES EMPANADAS ************/
 
 /* styles.css */
 
 .card {
-    margin: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
+  margin: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
 }
 
 .card img {
-    max-width: 100%;
-    border-radius: 5px;
+  max-width: 100%;
+  border-radius: 5px;
 }
 
 .card-title {
-    font-size: 1em;
-    margin: 10px 0;
-    text-align: center;
+  font-size: 1em;
+  margin: 10px 0;
+  text-align: center;
 }
 
 .card-actions {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
 }
-
 
 /************ STYLE POUR LE FICHIER QUI AFFICHE LES DETAILS D'UNE EMPANADA ***************/
 
 /* Styles pour le titre de l'empanada */
 .empanada-title {
-    font-size: 2rem; /* Ajustez la taille selon vos préférences */
-    margin-bottom: 20px; /* Espace sous le titre */
+  font-size: 2rem; /* Ajustez la taille selon vos préférences */
+  margin-bottom: 20px; /* Espace sous le titre */
 }
 
 /* Styles pour l'image de l'empanada */
 .empanada-image {
-    max-width: 300px; /* Largeur maximale de l'image */
-    height: auto; /* Hauteur automatique pour maintenir le ratio */
-    border-radius: 8px; /* Coins arrondis */
+  max-width: 300px; /* Largeur maximale de l'image */
+  height: auto; /* Hauteur automatique pour maintenir le ratio */
+  border-radius: 8px; /* Coins arrondis */
 }
 
 /* Styles pour le tableau des ingrédients */
 .empanada-table {
-    margin: 0 auto; /* Centre le tableau */
-    width: 80%; /* Largeur du tableau, ajustez si nécessaire */
+  margin: 0 auto; /* Centre le tableau */
+  width: 80%; /* Largeur du tableau, ajustez si nécessaire */
 }
 
 /* Styles pour le select de l'ingrédient */
 .empanada-select {
-    width: 300px; /* Largeur du select */
+  width: 300px; /* Largeur du select */
 }
 
 /* Styles pour les inputs du formulaire */
 .empanada-input {
-    width: 300px; /* Largeur de l'input */
+  width: 300px; /* Largeur de l'input */
 }
 
 /********************** FORMULAIRE LOGIN (comptes/Login.html) **********************/
 /* Centrer le conteneur du formulaire */
 .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Occuper toute la hauteur de la fenêtre */
-    background-color: #f8f9fa; /* Couleur de fond légèrement grise */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Occuper toute la hauteur de la fenêtre */
+  background-color: #f8f9fa; /* Couleur de fond légèrement grise */
 }
 
 /* Style de la carte qui contient le formulaire */
 .form-card {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    width: 400px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Titre centré */
 h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
 }
 
 /* Bouton de soumission */
 button[type="submit"] {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* Liens */
 a {
-    color: #007bff;
-    text-decoration: none;
+  color: #007bff;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-
-
+/********************** Style pour le Logo dans la NavBar **********************/
+/* Cibler toutes les images avec ce chemin spécifique */
+.icn-img {
+  width: 30px;
+}
