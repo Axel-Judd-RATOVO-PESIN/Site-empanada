@@ -1,32 +1,57 @@
-{% extends 'empanadas/base.html' %}
-
-{% load static %}
-
-{% block title %} Les empanadas {% endblock %}
-
-{% block main %}
+{% extends 'empanadas/base.html' %} {% load static %} {% block title %} Les
+empanadas {% endblock %} {% block main %}
 <h2 class="titreep">Voici nos {{ empanadas|length }} empanadas</h2>
 <div class="row">
-    {% for emp in empanadas %}
-    <div class="col-md-4 mb-4"> <!-- Utilisation d'une colonne Bootstrap -->
-        <div class="card"> <!-- Début de la carte -->
-            <img src="{{ MEDIA_URL }}{{ emp.image }}" class="card-img-top" alt="{{emp}}">
-            <div class="card-body">
-                <h6 class="card-title">{{ emp }}</h6>
-                <div class="d-flex justify-content-between">
-                    <a href="/empanada/{{ emp.idEmpanada }}" class="btn btn-primary">
-                        <i class="bi bi-eye"></i> 
-                    </a>
-                    <a href="/empanada/{{ emp.idEmpanada }}/update" class="btn btn-warning">
-                        <i class="bi bi-pencil-square"></i> 
-                    </a>
-                    <a href="/empanada/{{ emp.idEmpanada }}/delete" class="btn btn-danger">
-                        <i class="bi bi-trash"></i> 
-                    </a>
-                </div>
-            </div>
-        </div> <!-- Fin de la carte -->
+  {% for emp in empanadas %}
+  <div class="col-md-4 mb-4">
+    <!-- Utilisation d'une colonne Bootstrap -->
+    <div class="card">
+      <!-- Début de la carte -->
+      <img
+        src="{{ MEDIA_URL }}{{ emp.image }}"
+        class="card-img-top"
+        alt="{{ emp }}"
+      />
+      <div class="card-body">
+        <h6 class="card-title">{{ emp }}</h6>
+        <div class="d-flex justify-content-between">
+          <!-- Bouton Détails visible pour tout le monde -->
+          <a href="/empanada/{{ emp.idEmpanada }}" class="btn btn-primary">
+            <i class="bi bi-eye"></i>
+          </a>
+
+          <!-- Si l'utilisateur est connecté -->
+          {% if user.is_authenticated %}
+          <!-- Bouton Panier pour les clients connectés -->
+          {% if not user.is_staff %}
+          <a
+            href="/empanada/{{ emp.idEmpanada }}/add_to_cart"
+            class="btn btn-success"
+          >
+            <i class="bi bi-cart-plus"></i>
+          </a>
+          {% endif %}
+
+          <!-- Boutons Modifier et Supprimer pour le staff -->
+          {% if user.is_staff %}
+          <a
+            href="/empanada/{{ emp.idEmpanada }}/update"
+            class="btn btn-warning"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <a
+            href="/empanada/{{ emp.idEmpanada }}/delete"
+            class="btn btn-danger"
+          >
+            <i class="bi bi-trash"></i>
+          </a>
+          {% endif %} {% endif %}
+        </div>
+      </div>
     </div>
-    {% endfor %}
+    <!-- Fin de la carte -->
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}

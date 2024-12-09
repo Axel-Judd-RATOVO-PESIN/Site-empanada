@@ -1,76 +1,99 @@
-{% extends 'empanadas/base.html' %}
-
-{% load static %}
-
-{% block title %} Détail d'une empanada {% endblock %}
-
-{% block main %}
+{% extends 'empanadas/base.html' %} {% load static %} {% block title %} Détail
+d'une empanada {% endblock %} {% block main %}
 <div class="container my-5">
-    <h2 class="text-center empanada-title">{{ empanada }}</h2>
-    
-    <!-- Affichage des messages -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  <h2 class="text-center empanada-title">{{ empanada }}</h2>
+
+  <!-- Affichage des messages -->
+  {% if messages %} {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %} {% endif %}
+
+  <!-- Section Image -->
+  <div class="img-detail-empanada text-center">
+    <img
+      src="{{ MEDIA_URL }}{{ empanada.image }}"
+      class="img-fluid empanada-image"
+      alt="{{ empanada }}"
+    />
+  </div>
+
+  <!-- Table des ingrédients -->
+  <div class="table-container my-4">
+    {% if ingredients_list %}
+    <table class="table table-striped text-center empanada-table">
+      <thead>
+        <tr>
+          <th scope="col">Ingrédient</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Suppression</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ing in ingredients_list %}
+        <tr>
+          <td>{{ ing.Ingredient }}</td>
+          <td>{{ ing.Quantite }}</td>
+          <td>
+            {% if user.is_staff %}
+            <a
+              href="/empanadas/{{ empanada.idEmpanada }}/deleteIngredient/{{ ing.idComposition }}"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Supprimer cet ingrédient"
+            >
+              <i class="bi bi-trash"></i>
+            </a>
+            {% endif %}
+          </td>
+        </tr>
         {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      Aucun ingrédient n'a encore été ajouté pour cette empanada.
+    </div>
     {% endif %}
-    
-    <!-- Section Image -->
-    <div class="img-detail-empanada text-center">
-        <img src="{{ MEDIA_URL }}{{ empanada.image }}" class="img-fluid empanada-image" alt="{{ empanada }}">
-    </div>
+  </div>
 
-    <!-- Table des ingrédients -->
-    <div class="table-container my-4">
-        {% if ingredients_list %}
-            <table class="table table-striped text-center empanada-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Ingrédient</th>
-                        <th scope="col">Quantité</th>
-                        <th scope="col">Suppression</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ing in ingredients_list %}
-                        <tr>
-                            <td>{{ ing.Ingredient }}</td>
-                            <td>{{ ing.Quantite }}</td>
-                            <td>
-                                <a href="/empanadas/{{ empanada.idEmpanada }}/deleteIngredient/{{ ing.idComposition }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer cet ingrédient">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div class="alert alert-info text-center" role="alert">
-                Aucun ingrédient n'a encore été ajouté pour cette empanada.
-            </div>
-        {% endif %}
+  <!-- Section Ajouter un ingrédient -->
+  <h2 class="text-center">Ajouter un ingrédient à la recette</h2>
+  <form
+    action="/empanada/{{ empanada.idEmpanada }}/addIngredient"
+    method="POST"
+    class="text-center"
+  >
+    {% csrf_token %}
+    <div class="m-3">
+      <label for="id_ingredient" class="form-label"
+        >Choisir un ingrédient :</label
+      >
+      <select
+        id="id_ingredient"
+        name="ingredient"
+        class="form-select mx-auto empanada-select"
+        required
+      >
+        <option selected disabled>Choisissez</option>
+        {% for ingr in allIngredients %}
+        <option value="{{ ingr.idIngredient }}">
+          {{ ingr.nomIngredient }}
+        </option>
+        {% endfor %}
+      </select>
     </div>
-
-    <!-- Section Ajouter un ingrédient -->
-    <h2 class="text-center">Ajouter un ingrédient à la recette</h2>
-    <form action="/empanada/{{ empanada.idEmpanada }}/addIngredient" method="POST" class="text-center">
-        {% csrf_token %}
-        <div class="m-3">
-            <label for="id_ingredient" class="form-label">Choisir un ingrédient :</label>
-            <select id="id_ingredient" name="ingredient" class="form-select mx-auto empanada-select" required>
-                <option selected disabled>Choisissez</option>
-                {% for ingr in allIngredients %}
-                    <option value="{{ ingr.idIngredient }}">{{ ingr.nomIngredient }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="m-3">
-            <label for="id_quantite" class="form-label">Quantité</label>
-            <input id="id_quantite" name="quantite" type="text" maxlength="100" required class="form-control mx-auto empanada-input" />
-        </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-    </form>
+    <div class="m-3">
+      <label for="id_quantite" class="form-label">Quantité</label>
+      <input
+        id="id_quantite"
+        name="quantite"
+        type="text"
+        maxlength="100"
+        required
+        class="form-control mx-auto empanada-input"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+  </form>
 </div>
 {% endblock %}
-
