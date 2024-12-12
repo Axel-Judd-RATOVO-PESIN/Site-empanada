@@ -17,7 +17,7 @@ urlpatterns = [
     path('empanada/<int:empanada_id>/update/',          views.afficherFormulaireModificationEmpanada),
     path('empanada/<int:empanada_id>/updated',          views.modifierEmpanada, name='editEmpanada'),
     path('ingredient/<int:ingredient_id>/delete/',      views.supprimerIngredient, name='supprimerIngredient'),
-    path('ingredient/<int:ingredient_id>/update/',      views.afficherFromulaireModificationIngredient, name='afficherFormIngredient'),
+    path('ingredient/<int:ingredient_id>/update/',      views.afficherFormulaireModificationIngredient, name='afficherFormIngredient'),
     path('ingredient/<int:ingredient_id>/updated',      views.modifierIngredient, name='editIngredient'),
     path('empanadas/<int:empanada_id>/deleteIngredient/<int:ligne_id>/',  views.supprimerIngredientDansEmpanada),
 ]

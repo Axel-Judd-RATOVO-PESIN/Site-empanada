@@ -9,6 +9,7 @@ from empanadas.forms  import EmpanadaForm
 from empanadas.forms  import CompositionForm
 from django.http import HttpResponse #--- Importation de la librairie http pour afficher des messages
 from django.contrib import messages #--- Optionnel, mais me permet d'afficher un message suite à une action
+from django.contrib.auth.models import User
 
 
 def empanadas(request):
@@ -18,6 +19,7 @@ def empanadas(request):
 def ingredients(request):
     lesIngredients = Ingredient.objects.all()
     return render(request, 'empanadas/ingredients.html',{'ingredients' : lesIngredients} )
+		
 
 def empanada(request, empanada_id) :
 	laEmpanada = Empanada.objects.get( idEmpanada= empanada_id)
@@ -151,7 +153,7 @@ def supprimerIngredient(request, ingredient_id):
 	return redirect('liste_ingredients')
 
 
-def afficherFromulaireModificationIngredient(request, ingredient_id):
+def afficherFormulaireModificationIngredient(request, ingredient_id):
 	ingr = Ingredient.objects.get( idIngredient= ingredient_id)
 	return render( request, 'empanadas/formulaireModificationIngredient.html', {'ingredient' : ingr} )
 

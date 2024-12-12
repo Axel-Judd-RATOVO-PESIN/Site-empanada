@@ -1,32 +1,36 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}{% endblock%}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'empanadas/css/styles.css' %}">
-    <link rel="icon" href="{% static 'empanadas/img/icone.png' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'empanadas/css/styles.css' %}" /> 
+    <link rel="icon" href="{% static 'empanadas/img/icone.png' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
     <header>
-        {% if user.is_staff %}
-		{% include 'comptes/menuStaff.html' %}
-		{% elif user.is_authenticated %}
-		{% include 'comptes/menuClient.html' %}
-		{% else %}
-		{% include 'comptes/menuNonConnecte.html' %}
-		{% endif %}
+      {%if user.is_staff%} {%include 'comptes/menuStaff.html'%} 
+      {% elif user.is_authenticated %} {%include 'comptes/menuClient.html'%} {%else%}
+      {%include 'comptes/menuNonConnecte.html'%} {%endif%}
     </header>
 
-    <main>
-        {% block main%} {% endblock %}
-    </main>
+    <main>{% block main%} {% endblock %}</main>
 
-    <footer>
-        {% include 'empanadas/footer.html' %}
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</body>
+    <footer>{% include 'empanadas/footer.html' %}</footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

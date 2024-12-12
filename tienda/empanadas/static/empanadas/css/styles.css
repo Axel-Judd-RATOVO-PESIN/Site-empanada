@@ -27,7 +27,7 @@ footer {
 
 .card {
   margin: 20px;
-  border: 1px solid #ddd;
+  border: 100px solid #ddd;
   border-radius: 5px;
   padding: 15px;
 }
@@ -49,6 +49,57 @@ footer {
   margin-top: 10px;
 }
 
+/************ STYLE CSS POUR LA PAGE QUI LISTES LES INGRÉDIENTS ************/
+/* Style pour les cartes d'ingrédients */
+.card-ing {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto;
+  text-align: center;
+  background-color: #fff;
+}
+
+.card-ing img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-body-ing {
+  padding: 15px;
+}
+
+.card-title-ing {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+}
+
+.card-body-ing a {
+  text-decoration: none;
+  margin: 5px;
+  color: #007bff;
+  font-size: 18px;
+}
+
+.card-body-ing a:hover {
+  color: #0056b3;
+}
+
+.card-body-ing .bi-pencil-square,
+.card-body-ing .bi-trash {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.h2-ing {
+  background-color: beige;
+}
 /************ STYLE POUR LE FICHIER QUI AFFICHE LES DETAILS D'UNE EMPANADA ***************/
 
 /* Styles pour le titre de l'empanada */
