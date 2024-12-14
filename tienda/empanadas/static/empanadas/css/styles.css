@@ -27,7 +27,7 @@ footer {
 
 .card {
   margin: 20px;
-  border: 100px solid #ddd;
+  border: 1px solid #ddd;
   border-radius: 5px;
   padding: 15px;
 }
@@ -95,10 +95,6 @@ footer {
 .card-body-ing .bi-trash {
   margin: 0 10px;
   cursor: pointer;
-}
-
-.h2-ing {
-  background-color: beige;
 }
 /************ STYLE POUR LE FICHIER QUI AFFICHE LES DETAILS D'UNE EMPANADA ***************/
 
