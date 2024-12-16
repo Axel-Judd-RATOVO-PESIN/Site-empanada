@@ -1,0 +1,53 @@
+{% extends 'empanadas/base.html' %}
+
+{% block title %} Profil {% endblock %}
+
+{% block main %}
+<div class="form-container">
+  <h2>Votre compte</h2>
+  <form id="form_profil" action="/user/updated/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="m-3">
+      <label for="id_username" class="form-label">Identifiant</label>
+      <input id="id_username" name="username" type="text" value="{{user.username}}" required class="form-control"/>
+      {{ form.username.errors }}
+      {{ form.username }}
+    </div>
+    
+    <div class="m-3">
+      <label for="id_first_name" class="form-label">Prénom</label>
+      <input id="id_first_name" name="first_name" type="text" value="{{user.first_name}}" required class="form-control"/>
+      {{ form.first_name.errors }}
+      {{ form.first_name }}
+    </div>
+
+    <div class="m-3">
+      <label for="id_last_name" class="form-label">Nom</label>
+      <input id="id_last_name" name="last_name" type="text" value="{{user.last_name}}" required class="form-control"/>
+      {{ form.last_name.errors }}
+      {{ form.last_name }}
+    </div>
+
+    <div class="m-3">
+      <label for="id_email" class="form-label">Email</label>
+      <input id="id_email" name="email" type="email" value="{{user.email}}" required class="form-control"/>
+      {{ form.email.errors }}
+      {{ form.email }}
+    </div>
+
+    <div class="m-3">
+        <figure class="w-25 text-center m-auto"> 
+            <img src="{{MEDIA_URL}}{{user.image}}" class="img-fluid">
+            <figcaption> Avatar actuel</figcaption>
+        </figure>
+        <label for="id_image" class="form-label"> autre photo </label>
+
+        <input id="id_image" name="image" type="file" accept="image/*" class="form-control"/>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+  </form>
+</div>
+{% endblock %}
