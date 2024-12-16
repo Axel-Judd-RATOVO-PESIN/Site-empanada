@@ -6,6 +6,7 @@ from empanadas.forms import IngredientForm, EmpanadaForm, CompositionForm
 from django.http import HttpResponse #--- Importation de la librairie http pour afficher des messages
 from django.contrib import messages #--- Optionnel, mais me permet d'afficher un message suite à une action
 from django.contrib.auth.models import User #--- TP12
+from comptes.models import TiendaUser #--- On importe le model pour reconnaitre l' User
 
 # Vérifie si l'utilisateur est un membre du staff
 def is_staff(user):
@@ -13,8 +14,12 @@ def is_staff(user):
 
 
 def empanadas(request):
+    user = None
+
+    if request.user.is_authenticated:
+        user = TiendaUser.objects.get(id=request.user.id)
     lesEmpanadas = Empanada.objects.all()
-    return render(request,'empanadas/empanadas.html',{'empanadas' : lesEmpanadas} )
+    return render(request,'empanadas/empanadas.html',{'empanadas' : lesEmpanadas, 'user' : user} )
 
 
 def ingredients(request):

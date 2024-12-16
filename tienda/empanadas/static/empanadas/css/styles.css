@@ -255,3 +255,11 @@ a:hover {
 .icn-img {
   width: 30px;
 }
+
+
+/********* Style pour l' icone de l' utilisateur *********/
+.rounded-circle{
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
