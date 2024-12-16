@@ -1,26 +1,35 @@
 {% extends 'empanadas/base.html' %}
 {% load static %}
-{% block title %} les ingrédients {% endblock %}
-{% block main %}
-<h2 class="h2-ing">Voici nos {{ ingredients|length }} ingrédients</h2>
 
-<div class="col-md-4 mb-4">
-  <!-- Debut d'une carte -->
-  <div class="card-ing">
-    {% for ing in ingredients %}
-    <img src="{% static 'imagesEmpanadas/default.png' %}" class="card-img-top" alt="{{ ing }}" />
-    <div class="card-body-ing">
-      <h6 class="card-title-ing">{{ ing }}</h6>
-      <!-- Bouton modifier-->
-      <a href="{% url 'afficherFormIngredient' ing.idIngredient %}">
-        <i class="bi bi-pencil-square"></i>
-      </a>
-      <!-- Bouton supprimer-->
-      <a href="{% url 'supprimerIngredient' ing.idIngredient %}">
-        <i class="bi bi-trash"></i>
-      </a>
-    </div>
-    {% endfor %}
-  </div>
-</div>
+{% block title %} les ingrédients {% endblock %}
+
+{% block main %}
+  <h2 class="h2-ing">Voici nos {{ ingredients|length }} ingrédients</h2>
+
+  <table class="table-ing">
+    <thead>
+      <tr>
+        <th>Ingrédients</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ing in ingredients %}
+      <tr>
+        <td>{{ ing }}</td>
+        <td>
+          <a href="{% url 'afficherFormIngredient' ing.idIngredient %}">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'supprimerIngredient' ing.idIngredient %}">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

@@ -1,25 +1,32 @@
 # Create your views here.
-from django.shortcuts import render
-from django.shortcuts import redirect
-from empanadas.models import Empanada
-from empanadas.models import Ingredient
-from empanadas.models import Composition
-from empanadas.forms  import IngredientForm
-from empanadas.forms  import EmpanadaForm
-from empanadas.forms  import CompositionForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from empanadas.models import Empanada, Ingredient, Composition
+from empanadas.forms import IngredientForm, EmpanadaForm, CompositionForm
 from django.http import HttpResponse #--- Importation de la librairie http pour afficher des messages
 from django.contrib import messages #--- Optionnel, mais me permet d'afficher un message suite à une action
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User #--- TP12
+
+# Vérifie si l'utilisateur est un membre du staff
+def is_staff(user):
+    return user.is_staff
 
 
 def empanadas(request):
     lesEmpanadas = Empanada.objects.all()
     return render(request,'empanadas/empanadas.html',{'empanadas' : lesEmpanadas} )
 
+
 def ingredients(request):
-    lesIngredients = Ingredient.objects.all()
-    return render(request, 'empanadas/ingredients.html',{'ingredients' : lesIngredients} )
-		
+	user = None
+	if request.user.is_staff:
+		lesIngredients = Ingredient.objects.all()
+		user = User.objects.get(id=request.user.id)
+		return render(request, 'empanadas/ingredients.html',{'ingredients' : lesIngredients, 'user' : user,} )
+	elif request.user.is_authenticated:
+		return redirect('/empanadas')
+	else:
+		return redirect('/login')
 
 def empanada(request, empanada_id) :
 	laEmpanada = Empanada.objects.get( idEmpanada= empanada_id)
@@ -50,19 +57,24 @@ def empanada(request, empanada_id) :
 
 
 def formulaireCreationIngredient(request):
-	return render( request, 'empanadas/formulaireCreationIngredient.html' )
+	if request.user.is_staff:
+		return render( request, 'empanadas/formulaireCreationIngredient.html' )
+	else:
+		return redirect('/empanadas')
 
 def creerIngredient(request):
-	form = IngredientForm(request.POST)
-	if form.is_valid():
-		nomIngr 		= form.cleaned_data['nomIngredient']
-		ingr 			= Ingredient()
-		ingr.nomIngredient 	= nomIngr
-		ingr.save()
-		return render(request, 'empanadas/traitementFormulaireCreationIngredient.html', {'nom' : nomIngr}, )
+	if request.user.is_staff:
+		form = IngredientForm(request.POST)
+		if form.is_valid():
+			nomIngr 		= form.cleaned_data['nomIngredient']
+			ingr 			= Ingredient()
+			ingr.nomIngredient 	= nomIngr
+			ingr.save()
+			return render(request, 'empanadas/traitementFormulaireCreationIngredient.html', {'nom' : nomIngr}, )
+		else:
+			return render(request, 'empanadas/formulaireNonValide.html', {'erreurs' : form.errors}, )
 	else:
-		return render(request, 'empanadas/formulaireNonValide.html', {'erreurs' : form.errors}, )
-
+		return redirect('/empanadas')
 
 
 
@@ -70,21 +82,28 @@ def creerIngredient(request):
 #--------------------------------------- PARTIE : CREATION D'UNE EMPANADA ------------------------------------------------------
 
 def formulaireCreationEmpanada(request):
-	return render( request, 'empanadas/formulaireCreationEmpanada.html')
+    if request.user.is_staff:
+        return render(request, 'empanadas/formulaireCreationEmpanada.html')
+    else:
+        return redirect('/empanadas')
+
 
 def creerEmpanada(request):
-	form =  EmpanadaForm(request.POST)
-	if form.is_valid():
-		nomEmp = form.cleaned_data['nomEmpanada']
-		prixEmp = form.cleaned_data['prix']
-		emp = Empanada()
-		emp.nomEmpanada = nomEmp
-		emp.prix = prixEmp
-		emp.image = request.FILES['image']
-		emp.save()
-		return render(request, 'empanadas/traitementFormulaireCreationEmpanada.html', {'nomEmp' : nomEmp ,'prixEmp' : prixEmp}, )	
-	else:
-		return render(request, 'empanadas/formulaireCreationEmpanada.html', {'erreurs' : form.errors}, )
+    if request.user.is_staff:
+        form = EmpanadaForm(request.POST, request.FILES)
+        if form.is_valid():
+            nomEmp = form.cleaned_data['nomEmpanada']
+            prixEmp = form.cleaned_data['prix']
+            emp = Empanada()
+            emp.nomEmpanada = nomEmp
+            emp.prix = prixEmp
+            emp.image = request.FILES['image']
+            emp.save()
+            return render(request, 'empanadas/traitementFormulaireCreationEmpanada.html', {'nomEmp': nomEmp, 'prixEmp': prixEmp})
+        else:
+            return render(request, 'empanadas/formulaireCreationEmpanada.html', {'erreurs': form.errors})
+    else:
+        return redirect('/empanadas')
 
 
 
@@ -92,27 +111,27 @@ def creerEmpanada(request):
 #------------------------------------------------ PARTIE : AJOUT D'UN INGREDIENT POUR UN EMPANADA ----------------------------------
 
 def ajouterIngredientDsEmpanada(request, empanada_id):
-	form = CompositionForm(request.POST)
-	if form.is_valid():
-		ingr = form.cleaned_data['ingredient']
-		qt = form.cleaned_data['quantite']
-
-		#if not qt.endswith('g'): #-- Nous permet d'ajouter l'unité de mesure pour la quantite
-		#	qt += 'g'
-
-		emp = Empanada.objects.get(idEmpanada=empanada_id)
-		recherche = Composition.objects.filter(empanada=empanada_id, ingredient=ingr.idIngredient)
-		if recherche.count() > 0:
-			ligne = recherche.first()
-		else:
-			ligne = Composition()
-			ligne.ingredient = ingr
-			ligne.empanada = emp
-		ligne.quantite = qt
-		ligne.save()
-		return redirect('detailsEmpanada', empanada_id)
-	else:
-		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
+    if request.user.is_staff:
+        form = CompositionForm(request.POST)
+        if form.is_valid():
+            ingr = form.cleaned_data['ingredient']
+            qt = form.cleaned_data['quantite']
+            
+            emp = Empanada.objects.get(idEmpanada=empanada_id)
+            recherche = Composition.objects.filter(empanada=empanada_id, ingredient=ingr.idIngredient)
+            if recherche.count() > 0:
+                ligne = recherche.first()
+            else:
+                ligne = Composition()
+                ligne.ingredient = ingr
+                ligne.empanada = emp
+            ligne.quantite = qt
+            ligne.save()
+            return redirect('detailsEmpanada', empanada_id)
+        else:
+            return render(request, 'empanadas/formulaireNonValide.html', {'erreur': form.errors})
+    else:
+        return redirect('/empanadas')
 
 
 
@@ -120,51 +139,67 @@ def ajouterIngredientDsEmpanada(request, empanada_id):
 #-------------------------------------------- PARTIE : TRAITEMENT D'UNE EMPANADA ---------------------------------------------------
 
 def supprimerEmpanada(request, empanada_id):
-	emp = Empanada.objects.get( idEmpanada= empanada_id) #--- On recup la empanada à supprimer
-	emp.delete()
-	return redirect('liste_empanadas') #-- 'liste_empanadas' est le nom donné à l'url 'empanadas/'
+    if request.user.is_staff:
+        emp = Empanada.objects.get(idEmpanada=empanada_id)
+        emp.delete()
+        return redirect('liste_empanadas')  # 'liste_empanadas' est le nom donné à l'URL 'empanadas/'
+    else:
+        return redirect('/empanadas')
 
 
 def afficherFormulaireModificationEmpanada(request, empanada_id):
-	emp = Empanada.objects.get( idEmpanada= empanada_id)
-	return render( request, 'empanadas/formulaireModificationEmpanada.html', {'empanada': emp} )
+    if request.user.is_staff:
+        emp = Empanada.objects.get(idEmpanada=empanada_id)
+        return render(request, 'empanadas/formulaireModificationEmpanada.html', {'empanada': emp})
+    else:
+        return redirect('/empanadas')
 
 
 def modifierEmpanada(request, empanada_id):
-	empToEdit = Empanada.objects.get( idEmpanada= empanada_id)
-	form = EmpanadaForm(request.POST, request.FILES, instance=empToEdit) #-- Recup formulaire posté avec pour instance la empanada récupérée
-	if form.is_valid():
-		if 'image' in request.FILES:
-			empToEdit.image = request.FILES['image']
-		empToEdit.save()
-		return redirect('detailsEmpanada', empanada_id)
-	else:
-		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
-
-
+    if request.user.is_staff:
+        empToEdit = Empanada.objects.get(idEmpanada=empanada_id)
+        form = EmpanadaForm(request.POST, request.FILES, instance=empToEdit)
+        if form.is_valid():
+            if 'image' in request.FILES:
+                empToEdit.image = request.FILES['image']
+            empToEdit.save()
+            return redirect('detailsEmpanada', empanada_id)
+        else:
+            return render(request, 'empanadas/formulaireNonValide.html', {'erreur': form.errors})
+    else:
+        return redirect('/empanadas')
 
 
 
 #----------------------------------------------- PARTIE : TRAITEMENT D'UN INGREDIENT --------------------------------------------------
 
 def supprimerIngredient(request, ingredient_id):
-	ing = Ingredient.objects.get( idIngredient= ingredient_id)
-	ing.delete()
-	return redirect('liste_ingredients')
+    if request.user.is_staff:
+        ing = Ingredient.objects.get(idIngredient=ingredient_id)
+        ing.delete()
+        return redirect('liste_ingredients')
+    else:
+        return redirect('/empanadas')
 
 
 def afficherFormulaireModificationIngredient(request, ingredient_id):
-	ingr = Ingredient.objects.get( idIngredient= ingredient_id)
-	return render( request, 'empanadas/formulaireModificationIngredient.html', {'ingredient' : ingr} )
+    if request.user.is_staff:
+        ingr = Ingredient.objects.get(idIngredient=ingredient_id)
+        return render(request, 'empanadas/formulaireModificationIngredient.html', {'ingredient': ingr})
+    else:
+        return redirect('/empanadas')
 
 def modifierIngredient(request, ingredient_id):
-	ingrToEdit = Ingredient.objects.get( idIngredient= ingredient_id)
-	form = IngredientForm(request.POST, instance=ingrToEdit)
-	if form.is_valid():
-		form.save()
-		return redirect('liste_ingredients')
-	else:
-		return render(request, 'empanadas/formulaireNonValide.html', {'erreur' : form.errors})
+    if request.user.is_staff:
+        ingrToEdit = Ingredient.objects.get(idIngredient=ingredient_id)
+        form = IngredientForm(request.POST, instance=ingrToEdit)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_ingredients')
+        else:
+            return render(request, 'empanadas/formulaireNonValide.html', {'erreur': form.errors})
+    else:
+        return redirect('/empanadas')
 
 
 
@@ -173,11 +208,15 @@ def modifierIngredient(request, ingredient_id):
 
 
 def supprimerIngredientDansEmpanada(request, empanada_id, ligne_id):
-    try:
-        getComposition = Composition.objects.get(empanada=empanada_id, idComposition=ligne_id)
-        getComposition.delete()
-        messages.success(request, "L'ingrédient a bien été supprimé.")
-    except Composition.DoesNotExist:
-        messages.error(request, "Erreur : l'ingrédient à supprimer n'existe pas.")
+    if request.user.is_staff:
+        try:
+            composition = Composition.objects.get(empanada=empanada_id, idComposition=ligne_id)
+            composition.delete()
+            messages.success(request, "L'ingrédient a bien été supprimé.")
+        except Composition.DoesNotExist:
+            messages.error(request, "Erreur : l'ingrédient à supprimer n'existe pas.")
 
-    return redirect('detailsEmpanada', empanada_id=empanada_id)  # Redirection vers la page détails d'une empanada
+        return redirect('detailsEmpanada', empanada_id=empanada_id)  # Redirection vers la page détails d'une empanada
+    else:
+        return redirect('/empanadas')
+

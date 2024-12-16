@@ -3,27 +3,27 @@
 {% block title %} création d'une Empanada {% endblock %}
 
 {% block main %}
-<h2> Création d'une Empanada </h2>
-<form action="{% url 'creerEmpanada' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="m-3">
-                <label for="id_nomEmpanada" class="form-label"> Le nom de l'empanada </label>
-                <input id="id_nomEmpanada" name="nomEmpanada" type="text" maxlength="50" required class="form-control"/>
-		{{ form.nomEmpanada.errors }}
-        	{{ form.nomEmpanada }}		
-        </div>
-        <div class="m-3">
-                <label for="id_prix" class="form-label"> Prix </label>
-                <input id="id_prix" name="prix" type="number" step="0.01" min="0"  required class="form-control"/>
-		{{ form.prix.errors }}
-                {{ form.prix }}
-        </div>
-	<div class="m-3">
-		<label for="id_image" class="form-label">Image</label>
-		<input id="id_image" name="image" type="file" accept="image/*" class="form-control"/>
-	</div>
-
-
-        <button type="submit" class="btn btn-primary"> Envoyer </button>
-</form>
+<div class="form-container">
+  <h2> Création d'une Empanada </h2>
+  <form action="{% url 'creerEmpanada' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="m-3">
+      <label for="id_nomEmpanada" class="form-label"> Le nom de l'empanada </label>
+      <input id="id_nomEmpanada" name="nomEmpanada" type="text" maxlength="50" required class="form-control"/>
+      {{ form.nomEmpanada.errors }}
+      {{ form.nomEmpanada }}		
+    </div>
+    <div class="m-3">
+      <label for="id_prix" class="form-label"> Prix </label>
+      <input id="id_prix" name="prix" type="number" step="0.01" min="0" required class="form-control"/>
+      {{ form.prix.errors }}
+      {{ form.prix }}
+    </div>
+    <div class="m-3">
+      <label for="id_image" class="form-label">Image</label>
+      <input id="id_image" name="image" type="file" accept="image/*" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-primary"> Envoyer </button>
+  </form>
+</div>
 {% endblock %}

@@ -22,7 +22,6 @@ footer {
 /***************/
 
 /************ STYLE CSS POUR LA PAGE QUI LISTES TOUTES LES EMPANADAS ************/
-
 /* styles.css */
 
 .card {
@@ -49,53 +48,125 @@ footer {
   margin-top: 10px;
 }
 
-/************ STYLE CSS POUR LA PAGE QUI LISTES LES INGRÉDIENTS ************/
-/* Style pour les cartes d'ingrédients */
-.card-ing {
-  border: 1px solid #ddd;
+
+/************ STYLE CSS POUR LA PAGE FORMULAIRE CREATION D'UNE EMPANADA *************/
+/* Centre le formulaire et ajuste l'apparence générale */
+.form-container {
+  width: 60%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-control {
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.75rem;
   width: 100%;
-  max-width: 300px;
-  margin: 10px auto;
-  text-align: center;
-  background-color: #fff;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+}
+
+
+
+/************ STYLE CSS POUR LA PAGE QUI LISTES LES INGRÉDIENTS ************/
+/* Style pour le tableau d'ingrédients */
+.card-ing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1rem;
 }
 
 .card-ing img {
   width: 100%;
   height: auto;
-  border-bottom: 1px solid #ddd;
 }
 
 .card-body-ing {
-  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
 
 .card-title-ing {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 10px 0;
-  color: #333;
+  margin: 0;
+  font-size: 1.2rem;
 }
 
-.card-body-ing a {
-  text-decoration: none;
-  margin: 5px;
-  color: #007bff;
-  font-size: 18px;
-}
-
-.card-body-ing a:hover {
-  color: #0056b3;
-}
-
-.card-body-ing .bi-pencil-square,
-.card-body-ing .bi-trash {
-  margin: 0 10px;
+.bi {
+  font-size: 1.5rem;
   cursor: pointer;
 }
+
+.card-ing a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.table-ing {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table-ing th, .table-ing td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table-ing th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.table-ing td img {
+  max-width: 50px;
+}
+
+.table-ing a {
+  margin: 0 5px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.table-ing a:hover {
+  text-decoration: underline;
+}
+
+
 /************ STYLE POUR LE FICHIER QUI AFFICHE LES DETAILS D'UNE EMPANADA ***************/
 
 /* Styles pour le titre de l'empanada */
