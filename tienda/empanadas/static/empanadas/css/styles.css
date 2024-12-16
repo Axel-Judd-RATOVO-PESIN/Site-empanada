@@ -260,3 +260,41 @@ a:hover {
   height: 20px;
   margin-left: 5px;
 }
+
+/******************** STYLE POUR LE FOMULAIRE D'INSCRIPTION (formulairInscription)***************/
+
+form {
+  background-color: #ffffff; /* Fond du formulaire */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Éclairage léger */
+  width: 100%;
+  max-width: 400px; /* Largeur maximale du formulaire */
+  box-sizing: border-box; /* Inclus les paddings/marges dans la largeur */
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}

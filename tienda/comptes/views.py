@@ -39,3 +39,19 @@ def traitementFormulaireProfil(request):
             return redirect('/empanadas') #-- Redirection vers la page d'acceuil
     else:
         return redirect('/login')
+
+
+def formulaireInscription(request):
+    return render(request, 'comptes/formulaireInscription.html')
+
+def traitementFormulaireInscription(request):
+    user = TiendaUser()
+    user.first_name = request.POST [ 'first_name' ]
+    user.last_name = request.POST [ 'last_name' ]
+    user.username = request.POST [ 'username' ]
+    user.email = request.POST [ 'email' ]
+    user.set_password(request.POST [ 'password' ])
+    user.image = request.FILES [ 'image' ]
+    user.save()
+    login(request, user)
+    return redirect('/empanadas')
